@@ -2,12 +2,12 @@ package com.frankmoley.lil.learningspring.webservice;
 
 import com.frankmoley.lil.learningspring.business.ReservationService;
 import com.frankmoley.lil.learningspring.business.RoomReservation;
+import com.frankmoley.lil.learningspring.data.Guest;
+import com.frankmoley.lil.learningspring.data.Room;
 import com.frankmoley.lil.learningspring.util.DateUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -30,5 +30,20 @@ public class WebserviceController {
         return this.reservationService.getRoomReservationsForDate(date);
     }
 
+    @GetMapping("/guests")
+    public List<Guest> getGuests() {
+        return this.reservationService.getHotelGuests();
+    }
+
+    @PostMapping("/guests")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addGuest(@RequestBody Guest guest) {
+        this.reservationService.addGuest(guest);
+    }
+
+    @GetMapping("/rooms")
+    public List<Room> getRooms() {
+        return this.reservationService.getRooms();
+    }
 
 }

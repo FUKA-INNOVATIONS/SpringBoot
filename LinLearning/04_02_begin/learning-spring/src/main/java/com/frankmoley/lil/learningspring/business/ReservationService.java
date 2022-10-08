@@ -79,5 +79,25 @@ public class ReservationService {
         });
         return guestList;
     }
+
+    public void addGuest(Guest guest) {
+        if (null == guest) {
+            throw new RuntimeException("Guest can not be null"); // not the proper response, this returns 500 code
+        }
+        this.guestRepository.save(guest);
+    }
+
+    public List<Room> getRooms() {
+        Iterable<Room> rooms = this.roomRepository.findAll();
+        List<Room> roomList = new ArrayList<>();
+        rooms.forEach(room -> roomList.add(room));
+        roomList.sort(new Comparator<Room>() {
+            @Override
+            public int compare(Room o1, Room o2) {
+                return o1.getRoomNumber().compareTo(o2.getRoomNumber());
+            }
+        });
+        return roomList;
+    }
 }
 
